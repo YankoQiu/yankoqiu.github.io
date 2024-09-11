@@ -234,6 +234,24 @@
             scriptEl.setAttribute('async', '');
 
             parenEl.append(scriptEl);
+
+            const listener = () => {
+                const ThemeMapToPathMap = {
+                    'dark': '/themes/dark.css',
+                    'light': '/themes/light.css'
+                };
+
+                window.addEventListener("storage", function (e) {
+                    const theme = window.localStorage.getItem("user-color-scheme");
+                    const iframe = document.getElementsByClassName('giscus-frame');
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    const linkEl = iframeDoc.getElementById('giscus-theme');
+
+                    linkEl.setAttribute('href', ThemeMapToPathMap[theme]);
+                });
+            };
+
+            if (scriptEl.getAttribute('data-theme') === 'auto') listener();
         </script>
     </div>
 
