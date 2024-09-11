@@ -236,7 +236,7 @@
 
             parenEl.append(scriptEl);
 
-            const listener = () => {
+            if (themeConfig === 'auto') {
                 const ThemeMapToPathMap = {
                     'dark': '/themes/dark.css',
                     'light': '/themes/light.css'
@@ -245,27 +245,33 @@
                 const originalSetItem = localStorage.setItem;
 
                 localStorage.setItem = function(key, value) {
-                    const event = new Event('itemInserted');
-                    event.key = key;
-                    event.value = value;
-                    document.dispatchEvent(event);
+                    if (key === 'user-color-scheme') {
+                        // const event = new Event('user-color-scheme');
+                        // event.key = key;
+                        // event.value = value;
+                        // document.dispatchEvent(event);
+                        const theme = window.localStorage.getItem("user-color-scheme");
+                        const iframe = document.getElementsByClassName('giscus-frame');
+                        console.log('Iframe:', iframe);
+                        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                        const linkEl = iframeDoc.getElementById('giscus-theme');
+
+                        linkEl.setAttribute('href', ThemeMapToPathMap[theme]);
+                    }
+
                     originalSetItem.apply(this, arguments);
                 };
 
-                document.addEventListener("itemInserted", () => {
-                    const theme = window.localStorage.getItem("user-color-scheme");
-                    const iframe = document.getElementsByClassName('giscus-frame');
-                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                    const linkEl = iframeDoc.getElementById('giscus-theme');
-                    console.log('Storage change');
-                    console.log('Iframe:', iframe);
-
-                    linkEl.setAttribute('href', ThemeMapToPathMap[theme]);
-                }, false);
-            };
-
-            console.log('Theme:', scriptEl.getAttribute('data-theme'));
-            if (themeConfig === 'auto') listener();
+                // document.addEventListener("itemInserted", () => {
+                //     const theme = window.localStorage.getItem("user-color-scheme");
+                //     const iframe = document.getElementsByClassName('giscus-frame');
+                //     console.log('Iframe:', iframe);
+                //     const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                //     const linkEl = iframeDoc.getElementById('giscus-theme');
+                //
+                //     linkEl.setAttribute('href', ThemeMapToPathMap[theme]);
+                // }, false);
+            }
         </script>
     </div>
 
