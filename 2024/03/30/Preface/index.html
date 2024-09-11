@@ -215,7 +215,8 @@
         <script>
             const scriptEl = document.createElement('script');
             const parenEl = document.getElementById('giscus_container');
-            const defaultTheme = window.localStorage.getItem("user-color-scheme") || 'light';
+            const themeConfig = 'auto';
+            const themeDefault = window.localStorage.getItem("user-color-scheme") || 'light';
 
             scriptEl.setAttribute('src', 'https://giscus.app/client.js');
             scriptEl.setAttribute('data-repo', 'YankoQiu/yankoqiu.github.io');
@@ -227,7 +228,7 @@
             scriptEl.setAttribute('data-reactions-enabled', '1');
             scriptEl.setAttribute('data-emit-metadata', '0');
             scriptEl.setAttribute('data-input-position', 'top');
-            scriptEl.setAttribute('data-theme', 'auto' === 'auto' && defaultTheme );
+            scriptEl.setAttribute('data-theme', themeConfig === 'auto' ? themeDefault : themeConfig );
             scriptEl.setAttribute('data-lang', 'zh-CN');
             scriptEl.setAttribute('data-loading', 'lazy');
             scriptEl.setAttribute('crossorigin', 'anonymous');
@@ -256,7 +257,7 @@
             };
 
             console.log('Theme:', scriptEl.getAttribute('data-theme'));
-            if (scriptEl.getAttribute('data-theme') === 'auto') listener();
+            if (themeConfig === 'auto') listener();
         </script>
     </div>
 
