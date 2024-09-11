@@ -246,6 +246,7 @@
 
                 localStorage.setItem = function(key, value) {
                     const event = new Event('itemInserted');
+                    console.log('setItem...');
                     event.key = key;
                     event.value = value;
                     document.dispatchEvent(event);
@@ -253,7 +254,6 @@
                 };
 
                 console.log('Lister run ...');
-                console.log('Window', window);
 
                 window.addEventListener("itemInserted", () => {
                     const theme = window.localStorage.getItem("user-color-scheme");
