@@ -243,8 +243,9 @@
                 };
 
                 console.log('Lister run ...');
+                console.log('Window', window);
 
-                window.addEventListener("storage", function (e) {
+                window.addEventListener("storage", () => {
                     const theme = window.localStorage.getItem("user-color-scheme");
                     const iframe = document.getElementsByClassName('giscus-frame');
                     const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
