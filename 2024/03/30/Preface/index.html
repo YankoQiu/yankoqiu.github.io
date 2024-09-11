@@ -241,11 +241,15 @@
                     'light': '/themes/light.css'
                 };
 
+                console.log('Lister run ...');
+
                 window.addEventListener("storage", function (e) {
                     const theme = window.localStorage.getItem("user-color-scheme");
                     const iframe = document.getElementsByClassName('giscus-frame');
                     const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
                     const linkEl = iframeDoc.getElementById('giscus-theme');
+                    console.log('Storage change');
+                    console.log('Iframe:', iframe);
 
                     linkEl.setAttribute('href', ThemeMapToPathMap[theme]);
                 });
